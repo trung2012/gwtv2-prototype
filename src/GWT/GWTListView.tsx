@@ -9,7 +9,7 @@ import {
   parsePanes
 } from "./GwtParser";
 import GWTCameraDiagnostic from "./GWTCameraDiagnostic";
-import { getNumberOfCameras } from "./DiagnosticServices";
+import { DiagnosticServices } from "./DiagnosticServices";
 
 interface IGwtListViewProps {
   gwtDocument: Object;
@@ -17,8 +17,10 @@ interface IGwtListViewProps {
 
 interface IGwtListViewState {
   panesToShow: number[];
-  numberOfCameras: number | null;
+  initialNumberOfCameras: number | null;
+  followUpNumberOfCameras: number | null;
   isDiagnosticRunning: boolean;
+  target: string | null
 }
 
 export class GWTListView extends Component<
@@ -29,17 +31,28 @@ export class GWTListView extends Component<
     super(props);
     this.state = {
       panesToShow: [1],
-      numberOfCameras: null,
-      isDiagnosticRunning: false
+      initialNumberOfCameras: null,
+      followUpNumberOfCameras: null,
+      isDiagnosticRunning: false,
+      target: null
     };
   }
 
-  setDiagnosticLoading = () => {
+  setTarget = (target: string) => {
+    this.setState({ target });
+  }
+
+  setDiagnosticRunning = () => {
     this.setState({ isDiagnosticRunning: true });
   }
 
-  setNumberOfCameras = (cameraCount: number) => {
-    this.setState({ numberOfCameras: cameraCount, isDiagnosticRunning: false });
+  setNumberOfCameras = (type: string, cameraCount: number) => {
+    console.log(type)
+    this.setState(state => ({
+      ...state,
+      [type]: cameraCount,
+      isDiagnosticRunning: false
+    }));
   }
 
   addTargetPaneAfterCurrentPaneInPanes = (
@@ -70,6 +83,10 @@ export class GWTListView extends Component<
   }
 
   render() {
+    const { gwtDocument } = this.props;
+    const { onActionSelect, setDiagnosticRunning, setNumberOfCameras, setTarget } = this;
+    const { initialNumberOfCameras, followUpNumberOfCameras, isDiagnosticRunning, target } = this.state;
+
     return (
       <div>
         <h1>Windows Activation GWT App</h1>
@@ -78,13 +95,16 @@ export class GWTListView extends Component<
             return (
               <li key={paneId}>
                 <GwtPane
-                  pane={getPane(parsePanes(this.props.gwtDocument), paneId)}
-                  actions={parseActions(this.props.gwtDocument)}
-                  onActionSelect={this.onActionSelect}
-                  numberOfCameras={this.state.numberOfCameras}
-                  setNumberOfCameras={this.setNumberOfCameras}
-                  isDiagnosticRunning={this.state.isDiagnosticRunning}
-                  setDiagnosticLoading={this.setDiagnosticLoading}
+                  pane={getPane(parsePanes(gwtDocument), paneId)}
+                  actions={parseActions(gwtDocument)}
+                  onActionSelect={onActionSelect}
+                  initialNumberOfCameras={initialNumberOfCameras}
+                  setNumberOfCameras={setNumberOfCameras}
+                  followUpNumberOfCameras={followUpNumberOfCameras}
+                  isDiagnosticRunning={isDiagnosticRunning}
+                  setDiagnosticRunning={setDiagnosticRunning}
+                  target={target}
+                  setTarget={setTarget}
                 />
               </li>
             );
@@ -99,20 +119,26 @@ interface IGwtPaneProps {
   pane: IPane;
   actions: Array<IAction>;
   onActionSelect: (currentPaneId: number, targetPaneId: number) => void;
-  numberOfCameras: number | null;
-  setNumberOfCameras: (cameraCount: number) => void;
+  initialNumberOfCameras: number | null;
+  setNumberOfCameras: (type: string, cameraCount: number) => void;
+  followUpNumberOfCameras: number | null;
   isDiagnosticRunning: boolean;
-  setDiagnosticLoading: () => void;
+  setDiagnosticRunning: () => void;
+  target: string | null;
+  setTarget: (target: string) => void;
 }
 
 const GwtPane: React.FC<IGwtPaneProps> = ({
   pane,
   onActionSelect,
   actions: allActions,
-  numberOfCameras,
+  initialNumberOfCameras,
+  followUpNumberOfCameras,
   setNumberOfCameras,
   isDiagnosticRunning,
-  setDiagnosticLoading
+  setDiagnosticRunning,
+  target,
+  setTarget
 }) => {
   const [selectedKey, setSelectedKey] = useState<string>('');
   const [isButtonVisible, setIsButtonVisible] = useState(true);
@@ -138,29 +164,43 @@ const GwtPane: React.FC<IGwtPaneProps> = ({
       {
         pane.title.toLowerCase().includes('great') &&
         (
-          isDiagnosticRunning
+          isDiagnosticRunning && target === 'initialNumberOfCameras'
             ? <Spinner style={{ display: 'inline-flex' }} size={SpinnerSize.large} label='Diagnostics running. Please wait...' />
             :
             (
               isButtonVisible ?
-                <PrimaryButton text='Run Diagnostic' onClick={() => {
-                  setDiagnosticLoading();
-                  setIsButtonVisible(false);
-                  setTimeout(() => {
-                    setNumberOfCameras(getNumberOfCameras());
-                  }, 2500)
-                }} />
+                <PrimaryButton
+                  name='initialNumberOfCameras'
+                  text='Run Diagnostic'
+                  onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+                    const { name } = event.currentTarget;
+                    setDiagnosticRunning();
+                    setIsButtonVisible(false);
+                    setTarget(name)
+                    setTimeout(() => {
+                      setNumberOfCameras(name, DiagnosticServices.numberofcameras());
+                    }, 2500)
+                  }} />
                 : (
-                  numberOfCameras !== null &&
-                  <p>Number of cameras detected: {numberOfCameras}</p>
+                  initialNumberOfCameras !== null &&
+                  <p>Number of cameras detected: {initialNumberOfCameras === -1 ? 'None' : initialNumberOfCameras}</p>
                 )
             )
         )
       }
       {
-        pane.content && pane.content[0] && (
-          pane.content[0].toLowerCase().includes('execute') ?
-            <GWTCameraDiagnostic numberOfCameras={numberOfCameras} />
+        pane.content && pane.content[0] &&
+        (
+          pane.content[0].toLowerCase().includes('execute')
+            ? <GWTCameraDiagnostic
+              initialNumberOfCameras={initialNumberOfCameras}
+              followUpNumberOfCameras={followUpNumberOfCameras}
+              setNumberOfCameras={setNumberOfCameras}
+              isDiagnosticRunning={isDiagnosticRunning}
+              setDiagnosticRunning={setDiagnosticRunning}
+              target={target}
+              setTarget={setTarget}
+            />
             : <div dangerouslySetInnerHTML={{ __html: pane.content }} />
         )
       }

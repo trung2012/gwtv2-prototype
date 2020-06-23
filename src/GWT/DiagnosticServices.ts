@@ -1,7 +1,7 @@
 export const getNumberOfCameras = () => {
     // Return the number of cameras
     // return Math.floor(Math.random() * 3) - 1;
-    return 1;
+    return -1;
 }
 
 export const returnBoolean = () => {
