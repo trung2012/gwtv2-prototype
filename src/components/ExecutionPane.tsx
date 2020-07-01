@@ -3,14 +3,14 @@ import { IExecutionPane, IAction, } from '../utils/GwtParser';
 import { getHelpService } from '../utils/DiagnosticServices';
 import { Spinner, SpinnerSize, PrimaryButton, Stack } from '@fluentui/react';
 
-interface IGwtExecutionPaneProps {
+interface IExecutionPaneProps {
     pane: IExecutionPane;
     actions: Array<IAction>;
     onActionSelect: (currentPaneId: number, targetPaneId: number, currentPaneIndex: number) => void;
     index: number;
 }
 
-const GWTExecutionPane: React.FC<IGwtExecutionPaneProps> = ({ pane, onActionSelect, index }) => {
+const ExecutionPane: React.FC<IExecutionPaneProps> = ({ pane, onActionSelect, index }) => {
     const [isDiagnosticRunning, setIsDiagnosticRunning] = useState(false);
 
     const runDiagnostic = useCallback(async (mounted) => {
@@ -86,4 +86,4 @@ const GWTExecutionPane: React.FC<IGwtExecutionPaneProps> = ({ pane, onActionSele
     )
 }
 
-export default GWTExecutionPane;
+export default ExecutionPane;

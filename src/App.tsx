@@ -1,5 +1,5 @@
 import React from "react";
-import { GWTListView } from "./components/GWTListView";
+import { ListView } from "./components/ListView";
 import './App.css';
 
 // Fetch Gwt document from backend service. For now this is hardcoded.
@@ -11,7 +11,7 @@ import { CameraGwt } from "./utils/CameraGwt";
 export default function App() {
   return (
     <div className="App">
-      <GWTListView gwtDocument={CameraGwt} />
+      <ListView gwtDocument={CameraGwt} />
     </div>
   );
 }

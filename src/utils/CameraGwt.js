@@ -697,7 +697,7 @@ export const CameraGwt = {
                     "key": "isCameraReset",
                     "match": {
                         "true": 24
-                    }
+                    },
                 }
             },
             "isEndpoint": null,

@@ -12,21 +12,21 @@ import {
 // import GWTCameraDiagnostic from "../v1/GWTCameraDiagnostic";
 // import { DiagnosticServices } from "../v1/DiagnosticServices";
 
-interface IGwtListViewProps {
+interface IListViewProps {
   gwtDocument: Object;
 }
 
-interface IGwtListViewState {
+interface IListViewState {
   panesToShow: number[];
   isDiagnosticRunning: boolean;
   target: string | null
 }
 
-export class GWTListView extends Component<
-  IGwtListViewProps,
-  IGwtListViewState
+export class ListView extends Component<
+  IListViewProps,
+  IListViewState
   > {
-  constructor(props: IGwtListViewProps) {
+  constructor(props: IListViewProps) {
     super(props);
     this.state = {
       panesToShow: [1],

@@ -1,8 +1,8 @@
 export const computerInfo = {
-    numberOfCameras: 1,
+    numberOfCameras: 0,
     isRebootPending: false,
     isStreamSysDetected: false,
-    isUsbCameraDetected: false,
+    isUsbCameraDetected: true,
     isRealSenseDetected: true,
     isKinectSensorPresent: true
 }

@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { IPane, IAction, getAction } from "../utils/GwtParser";
 import { IChoiceGroupOption, ChoiceGroup } from "@fluentui/react";
 
-interface IGwtPaneProps {
+interface IPaneProps {
     pane: IPane;
     actions: Array<IAction>;
     onActionSelect: (currentPaneId: number, targetPaneId: number, currentPaneIndex: number) => void;
     index: number;
 }
 
-const GwtPane: React.FC<IGwtPaneProps> = ({
+const Pane: React.FC<IPaneProps> = ({
     pane,
     onActionSelect,
     actions: allActions,
@@ -41,4 +41,4 @@ const GwtPane: React.FC<IGwtPaneProps> = ({
     )
 };
 
-export default GwtPane;
+export default Pane;

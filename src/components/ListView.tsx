@@ -7,24 +7,24 @@ import {
   parsePanes,
   IExecutionPane
 } from "../utils/GwtParser";
-import GWTExecutionPane from "./GWTExecutionPane";
-import GwtPane from "./GWTPane";
+import ExecutionPane from "./ExecutionPane";
+import GwtPane from "./Pane";
 
-interface IGwtListViewProps {
+interface IListViewProps {
   gwtDocument: Object;
 }
 
-interface IGwtListViewState {
+interface IListViewState {
   panes: IPane[],
   actions: IAction[],
   panesToShow: number[];
 }
 
-export class GWTListView extends Component<
-  IGwtListViewProps,
-  IGwtListViewState
+export class ListView extends Component<
+  IListViewProps,
+  IListViewState
   > {
-  constructor(props: IGwtListViewProps) {
+  constructor(props: IListViewProps) {
     super(props);
     this.state = {
       panes: parsePanes(this.props.gwtDocument),
@@ -91,7 +91,7 @@ export class GWTListView extends Component<
             if (this.isExecutionPane(pane)) {
               return (
                 <li key={this.getKey(paneId, index)}>
-                  <GWTExecutionPane
+                  <ExecutionPane
                     index={index}
                     pane={pane}
                     actions={actions}
