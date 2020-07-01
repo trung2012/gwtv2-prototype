@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { RunDiagnosticFor1Camera, DiagnosticServices } from './DiagnosticServices';
+// import { RunDiagnosticFor1Camera, DiagnosticServices } from '../GWT/DiagnosticServices';
 import USBCameraNotDetected from './USBCameraNotDetected';
 import { Stack, PrimaryButton, DefaultButton, IStackTokens } from '@fluentui/react';
-import ProgressIndicatorComponent from './ProgressIndicator';
+import ProgressIndicatorComponent from '../components/ProgressIndicator';
 
 interface IGWTCameraCount1Props {
     isRebootPending: boolean | null;
@@ -21,11 +21,11 @@ const GWTCameraCount1: React.FC<IGWTCameraCount1Props> = ({ isRebootPending }) =
     const [isCameraDetectedAfterRollback, setIsCameraDetectedAfterRollback] = useState<{} | null>(null);
     const [buttonsVisible, setButtonsVisible] = useState(true);
 
-    useEffect(() => {
-        const diagnosticResults = RunDiagnosticFor1Camera();
-        setIsStreamSysDetected(diagnosticResults.isStreamSysDetected);
-        setIsUsbCameraDetected(diagnosticResults.isStreamSysDetected);
-    }, [])
+    // useEffect(() => {
+    //     const diagnosticResults = RunDiagnosticFor1Camera();
+    //     setIsStreamSysDetected(diagnosticResults.isStreamSysDetected);
+    //     setIsUsbCameraDetected(diagnosticResults.isStreamSysDetected);
+    // }, [])
 
     const rollbackUsbCamera = () => {
         setIsUsbRollingBack(true);
@@ -33,7 +33,7 @@ const GWTCameraCount1: React.FC<IGWTCameraCount1Props> = ({ isRebootPending }) =
         setButtonsVisible(false);
         setTimeout(() => {
             setIsUsbRollingBack(false);
-            setIsCameraDetectedAfterRollback(DiagnosticServices.rollbacktousb());
+            // setIsCameraDetectedAfterRollback(DiagnosticServices.rollbacktousb());
         }, 2500);
     }
 

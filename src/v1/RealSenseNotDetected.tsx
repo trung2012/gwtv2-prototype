@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { DiagnosticServices } from './DiagnosticServices';
+import { DiagnosticServices } from '../utils/DiagnosticServices';
 import { Spinner, SpinnerSize, PrimaryButton } from '@fluentui/react';
 
 const RealSenseNotDetected = () => {

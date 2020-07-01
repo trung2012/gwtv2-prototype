@@ -16,7 +16,10 @@ export const CameraGwt = {
                     "title": null,
                     "content": [
                         ""
-                    ]
+                    ],
+                    "execute": {
+                        "package": "css.dcs.diagaction.camera.numberofcameras"
+                    }
                 }
             ],
             "pane": 2,
@@ -269,6 +272,7 @@ export const CameraGwt = {
                 1,
                 2
             ],
+            isExecutionPane: false,
             "isEndpoint": null,
             "endpoint": null,
             "$$hashKey": "object:18463"
@@ -352,6 +356,12 @@ export const CameraGwt = {
                 }
             ],
             "actions": [],
+            "paneDetails": {
+                "isExecutionPane": true,
+                "packageName": "sigma.scon.diagaction.camera.resetcameraservices",
+                "text": "Please wait while we run this thing"
+            },
+
             "isEndpoint": null,
             "endpoint": null,
             "$$hashKey": "object:18466"
@@ -424,7 +434,7 @@ export const CameraGwt = {
                     },
                     "title": null,
                     "content": [
-                        "<p><span><span>Execute <strong><span>sigma.scon.diagaction.camera.rebootpending, sigma.scon.diagaction.camera.legacycamera, sigma.scon.diagaction.camera.IsUsbcamera</span></strong></span></span></p>\n"
+                        "<p><span><span>Execute <strong><span>sigma.scon.diagaction.camera.rebootpending, sigma.scon.diagaction.camera.legacycamera, sigma.scon.diagaction.camera.isusbcamera</span></strong></span></span></p>\n"
                     ]
                 }
             ],

@@ -1,5 +1,5 @@
 import React, { Component, useState } from "react";
-import { PrimaryButton, ChoiceGroup, IChoiceGroupOption, Spinner, SpinnerSize } from "@fluentui/react";
+import { ChoiceGroup, IChoiceGroupOption } from "@fluentui/react";
 import {
   getAction,
   getPane,
@@ -7,9 +7,10 @@ import {
   IPane,
   parseActions,
   parsePanes
-} from "./GwtParser";
-import GWTCameraDiagnostic from "./GWTCameraDiagnostic";
-import { DiagnosticServices } from "./DiagnosticServices";
+} from "../utils/GwtParser";
+// import { getHelpService } from "./DiagnosticServices";
+// import GWTCameraDiagnostic from "../v1/GWTCameraDiagnostic";
+// import { DiagnosticServices } from "../v1/DiagnosticServices";
 
 interface IGwtListViewProps {
   gwtDocument: Object;
@@ -17,8 +18,6 @@ interface IGwtListViewProps {
 
 interface IGwtListViewState {
   panesToShow: number[];
-  initialNumberOfCameras: number | null;
-  followUpNumberOfCameras: number | null;
   isDiagnosticRunning: boolean;
   target: string | null
 }
@@ -31,8 +30,6 @@ export class GWTListView extends Component<
     super(props);
     this.state = {
       panesToShow: [1],
-      initialNumberOfCameras: null,
-      followUpNumberOfCameras: null,
       isDiagnosticRunning: false,
       target: null
     };
@@ -44,15 +41,6 @@ export class GWTListView extends Component<
 
   setDiagnosticRunning = () => {
     this.setState({ isDiagnosticRunning: true });
-  }
-
-  setNumberOfCameras = (type: string, cameraCount: number) => {
-    console.log(type)
-    this.setState(state => ({
-      ...state,
-      [type]: cameraCount,
-      isDiagnosticRunning: false
-    }));
   }
 
   addTargetPaneAfterCurrentPaneInPanes = (
@@ -84,8 +72,8 @@ export class GWTListView extends Component<
 
   render() {
     const { gwtDocument } = this.props;
-    const { onActionSelect, setDiagnosticRunning, setNumberOfCameras, setTarget } = this;
-    const { initialNumberOfCameras, followUpNumberOfCameras, isDiagnosticRunning, target } = this.state;
+    const { onActionSelect, setDiagnosticRunning } = this;
+    const { isDiagnosticRunning } = this.state;
 
     return (
       <div>
@@ -98,13 +86,8 @@ export class GWTListView extends Component<
                   pane={getPane(parsePanes(gwtDocument), paneId)}
                   actions={parseActions(gwtDocument)}
                   onActionSelect={onActionSelect}
-                  initialNumberOfCameras={initialNumberOfCameras}
-                  setNumberOfCameras={setNumberOfCameras}
-                  followUpNumberOfCameras={followUpNumberOfCameras}
                   isDiagnosticRunning={isDiagnosticRunning}
                   setDiagnosticRunning={setDiagnosticRunning}
-                  target={target}
-                  setTarget={setTarget}
                 />
               </li>
             );
@@ -119,29 +102,18 @@ interface IGwtPaneProps {
   pane: IPane;
   actions: Array<IAction>;
   onActionSelect: (currentPaneId: number, targetPaneId: number) => void;
-  initialNumberOfCameras: number | null;
-  setNumberOfCameras: (type: string, cameraCount: number) => void;
-  followUpNumberOfCameras: number | null;
   isDiagnosticRunning: boolean;
   setDiagnosticRunning: () => void;
-  target: string | null;
-  setTarget: (target: string) => void;
 }
 
 const GwtPane: React.FC<IGwtPaneProps> = ({
   pane,
   onActionSelect,
-  actions: allActions,
-  initialNumberOfCameras,
-  followUpNumberOfCameras,
-  setNumberOfCameras,
-  isDiagnosticRunning,
-  setDiagnosticRunning,
-  target,
-  setTarget
+  actions: allActions
 }) => {
+
   const [selectedKey, setSelectedKey] = useState<string>('');
-  const [isButtonVisible, setIsButtonVisible] = useState(true);
+  // const [isButtonVisible, setIsButtonVisible] = useState(true);
 
   const onChange = React.useCallback((ev, option) => {
     setSelectedKey(option.key);
@@ -161,7 +133,8 @@ const GwtPane: React.FC<IGwtPaneProps> = ({
   return (
     <>
       <h3>{pane.title}</h3>
-      {
+      <div dangerouslySetInnerHTML={{ __html: pane.content }} />
+      {/* {
         pane.title.toLowerCase().includes('great') &&
         (
           isDiagnosticRunning && target === 'initialNumberOfCameras'
@@ -203,7 +176,7 @@ const GwtPane: React.FC<IGwtPaneProps> = ({
             />
             : <div dangerouslySetInnerHTML={{ __html: pane.content }} />
         )
-      }
+      } */}
       <ChoiceGroup selectedKey={selectedKey} options={options} onChange={onChange} />
     </>
   )

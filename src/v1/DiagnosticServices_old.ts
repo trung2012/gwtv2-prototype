@@ -29,13 +29,3 @@ export const DiagnosticServices = {
         detected: returnBoolean()
     })
 }
-
-export const RunDiagnosticFor1Camera = () => {
-    const legacyCameraResults = DiagnosticServices.legacycamera();
-    const usbCameraResults = DiagnosticServices.isUsbcamera();
-
-    return {
-        ...legacyCameraResults,
-        ...usbCameraResults
-    }
-}

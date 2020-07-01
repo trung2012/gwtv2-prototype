@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Stack, PrimaryButton, DefaultButton, IStackTokens, Spinner, SpinnerSize } from '@fluentui/react';
-import { DiagnosticServices } from './DiagnosticServices';
+// import { DiagnosticServices } from '../GWT/DiagnosticServices';
 import RealSenseNotDetected from './RealSenseNotDetected';
-import ProgressIndicatorComponent from './ProgressIndicator';
+import ProgressIndicatorComponent from '../components/ProgressIndicator';
 
 const numericalSpacingStackTokens: IStackTokens = {
     childrenGap: 10,
@@ -10,18 +10,18 @@ const numericalSpacingStackTokens: IStackTokens = {
 };
 
 const USBCameraNotDetected = () => {
-    const [isRealSenseResetting, setIsRealSenseResetting] = useState(false);
-    const [isRealSenseDetected, setIsRealSenseDetected] = useState(false);
+    const [isRealSenseResetting, setisrealsenseResetting] = useState(false);
+    const [isRealSenseDetected, setisrealsenseDetected] = useState(false);
     const [detectingRealSense, setDetectingRealSense] = useState(true);
     const [allowRealSenseReset, setAllowRealSenseReset] = useState<boolean | null>(null);
     const [buttonsVisible, setButtonsVisible] = useState(true);
 
-    useEffect(() => {
-        setTimeout(() => {
-            setIsRealSenseDetected(DiagnosticServices.isRealSense().isRealSenseDetected);
-            setDetectingRealSense(false);
-        }, 1500);
-    }, [])
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         setisrealsenseDetected(DiagnosticServices.isRealSense().isRealSenseDetected);
+    //         setDetectingRealSense(false);
+    //     }, 1500);
+    // }, [])
 
     if (detectingRealSense) return <Spinner label='Checking Real Sense Services' size={SpinnerSize.large} style={{ display: 'inline-flex' }} />
 
@@ -43,20 +43,20 @@ const USBCameraNotDetected = () => {
                             <PrimaryButton
                                 text='Yes'
                                 onClick={() => {
-                                    setIsRealSenseResetting(true);
+                                    setisrealsenseResetting(true);
                                     setButtonsVisible(false);
                                     setTimeout(() => {
                                         setAllowRealSenseReset(true);
-                                        setIsRealSenseResetting(false);
+                                        setisrealsenseResetting(false);
                                     }, 2000);
-                                    DiagnosticServices.resetrealsenseservices();
+                                    // DiagnosticServices.resetrealsenseservices();
                                 }}
                             />
                             <DefaultButton
                                 text='No'
                                 onClick={() => {
                                     setButtonsVisible(false);
-                                    setIsRealSenseResetting(false);
+                                    setisrealsenseResetting(false);
                                     setAllowRealSenseReset(false);
                                 }}
                             />

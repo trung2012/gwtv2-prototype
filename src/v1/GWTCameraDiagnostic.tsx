@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { DiagnosticServices } from './DiagnosticServices';
+import { DiagnosticServices } from '../utils/DiagnosticServices';
 import GWTCameraCount1 from './GWTCameraCount1';
 import GWTCameraCountNone from './GWTCameraCountNone';
 
