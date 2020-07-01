@@ -16,11 +16,10 @@ export interface IExecutionPane {
   title: string;
   content: string;
   actionIds: number[];
-  isExecutionPane: boolean;
-  execute: IPaneDetails
+  execute: IPaneExecute
 }
 
-export interface IPaneDetails {
+export interface IPaneExecute {
   isRenderedAsButton?: boolean;
   text: string | null;
   package: string;
@@ -38,7 +37,6 @@ export const parsePanes = (gwt: any) => {
     title: pane.title,
     content: pane.body[0].content,
     actionIds: pane.actions,
-    isExecutionPane: pane.isExecutionPane,
     execute: pane.execute
   }));
 };
@@ -53,15 +51,15 @@ export const parseActions = (gwt: any) => {
 
 export const getPane = (panes: Array<IPane | IExecutionPane>, paneId: number): IPane | IExecutionPane => {
   // console.log("getPane() called with ", paneId);
-  const matchedPanes = panes.filter(pane => pane.id === paneId);
-  if (matchedPanes.length === 0)
+  const matchedPane = panes.find(pane => pane.id === paneId);
+  if (!matchedPane)
     throw new Error(
       `Couldnt find action with id = ${paneId} in ${paneId} array`
     );
   // console.log(
   //   `SUCCESS: Found pane ${paneId} in ${panes} array = ${matchedPanes[0]}`
   // );
-  return matchedPanes[0];
+  return matchedPane;
 };
 
 export const getAction = (
@@ -69,8 +67,8 @@ export const getAction = (
   actionId: number
 ): IAction => {
   // console.log("getAction() called with ", actionId);
-  const matchedActions = actions.filter(action => action.id === actionId);
-  if (matchedActions.length === 0)
+  const matchedAction = actions.find(action => action.id === actionId);
+  if (!matchedAction)
     throw new Error(
       `Couldnt find action with id = ${actionId} in ${actions} array`
     );
@@ -79,5 +77,5 @@ export const getAction = (
   //     matchedActions[0]
   //   }`
   // );
-  return matchedActions[0];
+  return matchedAction;
 };

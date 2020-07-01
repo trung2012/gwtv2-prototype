@@ -688,7 +688,6 @@ export const CameraGwt = {
                 }
             ],
             "actions": [],
-            "isExecutionPane": true,
             "execute": {
                 "isRenderedAsButton": false,
                 "text": "Resetting camera services",
@@ -820,7 +819,6 @@ export const CameraGwt = {
                 }
             ],
             "actions": [],
-            "isExecutionPane": true,
             "execute": {
                 "isRenderedAsButton": false,
                 "text": "Checking if reboot is pending",
@@ -850,13 +848,10 @@ export const CameraGwt = {
                         "id": null
                     },
                     "title": null,
-                    "content": [
-                        "<p><span><span>Execute <strong><span>sigma.scon.diagaction.camera.rebootpending</span></strong></span></span></p>\n\n<p>Is reboot pending?</p>\n"
-                    ]
+                    "content": []
                 }
             ],
             "actions": [],
-            "isExecutionPane": true,
             "execute": {
                 "isRenderedAsButton": false,
                 "text": "Checking if reboot is pending",
@@ -894,7 +889,6 @@ export const CameraGwt = {
                 6,
                 7
             ],
-            "isExecutionPane": true,
             "execute": {
                 "isRenderedAsButton": false,
                 "text": "Detecting cameras",
@@ -978,7 +972,6 @@ export const CameraGwt = {
                 }
             ],
             "actions": [],
-            "isExecutionPane": true,
             "execute": {
                 "isRenderedAsButton": false,
                 "text": "Checking legacy camera",
@@ -1038,7 +1031,6 @@ export const CameraGwt = {
                 17,
                 18
             ],
-            "isExecutionPane": true,
             "execute": {
                 "isRenderedAsButton": false,
                 "text": "Checking USB camera",
@@ -1102,7 +1094,6 @@ export const CameraGwt = {
                 }
             ],
             "actions": [],
-            "isExecutionPane": true,
             "execute": {
                 "isRenderedAsButton": false,
                 "text": "Rolling back USB camera driver",
@@ -1136,7 +1127,6 @@ export const CameraGwt = {
                 }
             ],
             "actions": [],
-            "isExecutionPane": true,
             "execute": {
                 "isRenderedAsButton": false,
                 "text": "Checking Real Sense Service",
@@ -1170,7 +1160,6 @@ export const CameraGwt = {
                 }
             ],
             "actions": [],
-            "isExecutionPane": true,
             "execute": {
                 "isRenderedAsButton": false,
                 "text": "Checking Kinect sensor",
@@ -1209,7 +1198,6 @@ export const CameraGwt = {
                 3,
                 4
             ],
-            "isExecutionPane": true,
             "execute": {
                 "isRenderedAsButton": true,
                 "text": "Stop Kinect service",
@@ -1269,7 +1257,6 @@ export const CameraGwt = {
                 }
             ],
             "actions": [],
-            "isExecutionPane": true,
             "execute": {
                 "isRenderedAsButton": false,
                 "text": "Detecting cameras",
@@ -1379,7 +1366,6 @@ export const CameraGwt = {
                 }
             ],
             "actions": [],
-            "isExecutionPane": true,
             "execute": {
                 "isRenderedAsButton": false,
                 "text": "Resetting Real Sense Service",

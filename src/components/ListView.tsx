@@ -71,10 +71,10 @@ export class ListView extends Component<
   }
 
   isExecutionPane(pane: IPane | IExecutionPane): pane is IExecutionPane {
-    return (pane as IExecutionPane).isExecutionPane !== undefined;
+    return (pane as IExecutionPane).execute !== undefined;
   }
 
-  getKey = (paneId: number, index: number) => {
+  getPaneKey = (paneId: number, index: number) => {
     return paneId.toString() + index.toString();
   }
 
@@ -90,7 +90,7 @@ export class ListView extends Component<
             const pane = getPane(panes, paneId);
             if (this.isExecutionPane(pane)) {
               return (
-                <li key={this.getKey(paneId, index)}>
+                <li key={this.getPaneKey(paneId, index)}>
                   <ExecutionPane
                     index={index}
                     pane={pane}
@@ -102,7 +102,7 @@ export class ListView extends Component<
             }
 
             return (
-              <li key={this.getKey(paneId, index)}>
+              <li key={this.getPaneKey(paneId, index)}>
                 <GwtPane
                   index={index}
                   pane={pane}
