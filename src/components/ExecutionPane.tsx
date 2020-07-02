@@ -12,15 +12,17 @@ interface IExecutionPaneProps {
 
 const ExecutionPane: React.FC<IExecutionPaneProps> = ({ pane, onActionSelect, index }) => {
     const [isDiagnosticRunning, setIsDiagnosticRunning] = useState(false);
+    const [diagnosticResultText, setDiagnosticResultText] = useState<string | null>(null);
 
     const runDiagnostic = useCallback(async (mounted) => {
         setIsDiagnosticRunning(true);
 
         const executionResult = await getHelpService.getDiagnosticSessionAsync('IssueType', pane.execute.package);
         const expectedResultValue = executionResult[pane.execute.result.key];
-        const targetPaneId = pane.execute.result.match[expectedResultValue];
+        const { targetPaneId, text: resultText } = pane.execute.result.match[expectedResultValue];
 
         if (expectedResultValue !== undefined && targetPaneId && mounted.isMounted) {
+            setDiagnosticResultText(resultText);
             onActionSelect(pane.id, targetPaneId, index);
         }
 
@@ -75,12 +77,14 @@ const ExecutionPane: React.FC<IExecutionPaneProps> = ({ pane, onActionSelect, in
                 renderPaneContent()
             }
             {
-                isDiagnosticRunning &&
-                <Spinner
-                    size={SpinnerSize.large}
-                    label={pane.execute.text || 'Running Diagnostics'}
-                    style={{ display: 'inline-flex' }}
-                />
+                isDiagnosticRunning
+                    ? <Spinner
+                        size={SpinnerSize.large}
+                        label={pane.execute.text || 'Running Diagnostics'}
+                        style={{ display: 'inline-flex' }}
+                    />
+                    : <p>{diagnosticResultText}</p>
+
             }
         </Stack>
     )

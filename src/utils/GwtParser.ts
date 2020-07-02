@@ -26,7 +26,10 @@ export interface IPaneExecute {
   result: {
     key: string;
     match: {
-      [key: string]: number;
+      [key: string]: {
+        targetPaneId: number;
+        text: string;
+      };
     }
   }
 }
