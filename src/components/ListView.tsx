@@ -8,7 +8,7 @@ import {
   IExecutionPane
 } from "../utils/GwtParser";
 import ExecutionPane from "./ExecutionPane";
-import GwtPane from "./Pane";
+import Pane from "./Pane";
 
 interface IListViewProps {
   gwtDocument: Object;
@@ -103,7 +103,7 @@ export class ListView extends Component<
 
             return (
               <li key={this.getPaneKey(paneId, index)}>
-                <GwtPane
+                <Pane
                   index={index}
                   pane={pane}
                   actions={actions}
